@@ -3,526 +3,461 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خلية الحروف - التحدي الأكبر</title>
-    <!-- استيراد خطوط احترافية -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Almarai:wght@400;700;800&display=swap" rel="stylesheet">
+    <title>خلية الحروف Pro - H7MODI77</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- مكتبة الاحتفالات -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
-            --bg-deep: #050c1f;
-            --bg-gradient: radial-gradient(circle at center, #0f1c3f 0%, #050c1f 100%);
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --accent-red: #ff3e3e;
-            --team1-color: #ffa500;
-            --team2-color: #00f2ff;
-            --text-gold: #e4c16f;
+            --bg-deep: #020617;
+            --accent-red: #ef4444;
+            --gold: #fbbf24;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+            --t1-color: #ffa500;
+            --t2-color: #00f2ff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Cairo', sans-serif;
-            user-select: none;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
 
         body {
             background: var(--bg-deep);
-            background-image: var(--bg-gradient);
             color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            height: 100vh;
             overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, #1e293b 0%, #020617 100%);
         }
 
-        /* شاشات اللعبة */
+        /* الشاشات */
         .screen {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            animation: fadeIn 0.8s ease;
+            position: absolute; width: 100%; height: 100%;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            transition: 0.5s;
         }
+        .screen.active { display: flex; animation: zoomIn 0.5s ease; }
 
-        .screen.active { display: flex; }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
 
-        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
-        /* الشاشة الرئيسية */
-        .main-title {
-            font-size: 80px;
-            font-weight: 900;
-            text-align: center;
-            line-height: 1;
-            margin-bottom: 20px;
-            text-shadow: 0 0 30px rgba(255, 62, 62, 0.5);
-        }
-
-        .main-title span { color: var(--accent-red); position: relative; }
-        .main-title span::after {
-            content: ''; position: absolute; bottom: 0; right: 0;
-            width: 100%; height: 8px; background: var(--accent-red); border-radius: 4px;
-        }
-
-        .desc-text {
-            color: var(--accent-red);
-            font-size: 20px;
-            text-align: center;
-            max-width: 600px;
-            margin-bottom: 40px;
-            font-weight: bold;
-        }
-
-        .rules-list {
+        /* التصميم الفخم */
+        .luxury-card {
             background: var(--glass);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(10px);
-            margin-bottom: 40px;
-        }
-
-        .rules-list p { margin: 10px 0; font-size: 18px; opacity: 0.9; }
-
-        /* الأزرار الفخمة */
-        .btn-luxury {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-            padding: 15px 40px;
-            font-size: 22px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .btn-luxury:hover {
-            background: white;
-            color: var(--bg-deep);
-            box-shadow: 0 0 30px rgba(255,255,255,0.4);
-        }
-
-        /* شاشة الإعدادات */
-        .setup-container {
-            display: flex;
-            gap: 40px;
-            margin-bottom: 50px;
-        }
-
-        .team-card {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 40px;
             text-align: center;
-            width: 280px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .team-card h3 { margin-bottom: 20px; font-size: 24px; }
-        .color-picker {
-            width: 100%; height: 50px; border: none; cursor: pointer; border-radius: 10px; background: none;
+        .main-title { font-size: 80px; font-weight: 900; line-height: 1; margin-bottom: 10px; }
+        .main-title span { color: var(--accent-red); text-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+
+        .btn-play {
+            background: white; color: black; border: none; padding: 15px 50px;
+            font-size: 24px; font-weight: 900; border-radius: 50px; cursor: pointer;
+            transition: 0.3s; margin-top: 20px; box-shadow: 0 0 20px rgba(255,255,255,0.2);
         }
+        .btn-play:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255,255,255,0.4); }
 
-        .timer-selector {
-            display: flex; gap: 15px; margin-top: 20px;
-        }
-
-        .time-btn {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            color: white; padding: 10px 20px; border-radius: 10px; cursor: pointer;
-        }
-
-        .time-btn.selected { background: var(--accent-red); border-color: var(--accent-red); }
-
-        /* خلية الحروف */
-        .game-grid-container {
-            display: flex;
-            width: 95%;
-            height: 90%;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .side-panel {
-            width: 300px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .score-display {
-            background: var(--glass);
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            border: 2px solid transparent;
-        }
-
-        .score-val { font-size: 60px; font-weight: 900; margin: 10px 0; }
+        /* الخلية الشبكية */
+        .game-container { display: flex; width: 100%; height: 100%; padding: 20px; justify-content: space-around; align-items: center; }
         
-        .rounds-count { color: var(--text-gold); font-weight: bold; }
-
+        .side-panel { width: 300px; padding: 20px; border-radius: 20px; background: var(--glass); border: 1px solid var(--border); }
+        
         .hex-grid {
             display: grid;
-            grid-template-columns: repeat(5, 90px);
-            gap: 10px;
-            padding: 20px;
-            position: relative;
+            grid-template-columns: repeat(5, 85px);
+            gap: 12px;
+            padding: 40px;
+            filter: drop-shadow(0 0 20px rgba(0,0,0,0.5));
         }
 
-        /* شكل الخلية السداسية */
         .hexagon {
-            width: 90px;
-            height: 104px;
+            width: 85px; height: 98px;
             background: var(--accent-red);
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            font-weight: 900;
-            cursor: pointer;
-            transition: 0.4s;
-            color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 32px; font-weight: 900; cursor: pointer; transition: 0.3s;
+            position: relative;
         }
+        .hexagon:hover { transform: scale(1.15); z-index: 10; filter: brightness(1.2); }
+        .hexagon.owned { cursor: default; }
+        .hexagon.winner-path { animation: glow 1s infinite alternate; border: 2px solid white; }
 
-        .hexagon:hover { transform: scale(1.1); filter: brightness(1.3); }
+        @keyframes glow { from { filter: brightness(1); box-shadow: 0 0 10px white; } to { filter: brightness(1.8); box-shadow: 0 0 30px white; } }
 
-        .helper-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 10px;
-        }
+        /* المؤقت والتحكم */
+        .timer-box { font-size: 60px; font-family: 'Courier New', monospace; font-weight: 900; color: white; margin-bottom: 10px; }
+        .control-btns { display: flex; gap: 10px; }
+        .btn-small { background: var(--glass); border: 1px solid var(--border); color: white; padding: 10px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .btn-small:hover { background: rgba(255,255,255,0.1); }
 
-        .helper-item {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid #1a8a8a;
-            padding: 10px;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            font-size: 14px;
-        }
+        /* البطاقات العشوائية */
+        .power-up-icon { position: absolute; font-size: 20px; top: 10px; }
 
-        .helper-item.used { opacity: 0.2; pointer-events: none; text-decoration: line-through; }
-
-        .timer-circle {
-            font-size: 50px;
-            font-family: monospace;
-            text-align: center;
-            margin-bottom: 20px;
-            color: white;
-            text-shadow: 0 0 20px rgba(255,255,255,0.5);
-        }
-
-        /* النوافذ المنبثقة */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000;
+            background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 1000;
         }
-
-        .modal-content {
-            background: #111; padding: 40px; border-radius: 30px; text-align: center;
-            border: 2px solid var(--text-gold); box-shadow: 0 0 50px rgba(228, 193, 111, 0.2);
-        }
-
-        .modal-btns { display: flex; gap: 20px; margin-top: 30px; justify-content: center; }
-        .modal-btns button { padding: 15px 30px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; font-size: 18px; }
-
-        .pulse { animation: pulseAnim 2s infinite; }
-        @keyframes pulseAnim { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
-
+        .modal-content { background: #111; padding: 50px; border-radius: 40px; text-align: center; border: 2px solid var(--gold); }
+        
+        .score-val { font-size: 70px; font-weight: 900; line-height: 1; }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة 1: البداية -->
+    <!-- شاشة البداية -->
     <section id="screen-start" class="screen active">
-        <h1 class="main-title">خلية<br><span>الحروف</span></h1>
-        <p class="desc-text">مرحبا بك في خلية الحروف<br>اللعبة التي تختبر سرعتك في التفكير وربط المعلومات بطريقة ممتعة</p>
-        
-        <div class="rules-list">
-            <p>• هل تقدر تجاوب بسرعة؟</p>
-            <p>• هل تقدر تغطي كل الحروف بدون أخطاء؟</p>
-            <p>• هل تقدر تجاوب خلال دقيقة ونص؟</p>
+        <div class="luxury-card">
+            <h1 class="main-title">خلية<br><span>الحروف</span></h1>
+            <p style="color: var(--accent-red); font-weight: bold; margin-bottom: 20px;">النسخة الاحترافية (H7MODI77)</p>
+            <div style="text-align: right; margin: 20px 0; font-size: 18px; opacity: 0.8;">
+                <p>✔ نظام كشف المسار الآلي</p>
+                <p>✔ بطاقات طاقة عشوائية</p>
+                <p>✔ مؤثرات سينمائية</p>
+            </div>
+            <button class="btn-play" onclick="goTo('screen-setup')">تحديد الفرق</button>
         </div>
-
-        <button class="btn-luxury" onclick="goTo('screen-setup')">
-            حددد الافرقة <span style="font-size: 30px;">←</span>
-        </button>
     </section>
 
-    <!-- الشاشة 2: الإعدادات -->
+    <!-- شاشة الإعدادات -->
     <section id="screen-setup" class="screen">
-        <h2 style="font-size: 40px; margin-bottom: 40px;">إعدادات المواجهة</h2>
-        
-        <div class="setup-container">
-            <div class="team-card" id="card-t1">
-                <h3>الفريق الأول</h3>
-                <input type="color" id="color-t1" class="color-picker" value="#ffa500">
-                <p style="margin-top: 10px;">تغيير اللون</p>
+        <div class="luxury-card">
+            <h2>إعدادات المعركة</h2>
+            <div style="display: flex; gap: 30px; margin: 30px 0;">
+                <div class="side-panel">
+                    <h3>الفريق الأول</h3>
+                    <input type="color" id="t1-color" value="#ffa500" style="width:100%; height:50px; margin-top:10px;">
+                </div>
+                <div class="side-panel">
+                    <h3>الفريق الثاني</h3>
+                    <input type="color" id="t2-color" value="#00f2ff" style="width:100%; height:50px; margin-top:10px;">
+                </div>
             </div>
-
-            <div class="team-card" id="card-t2">
-                <h3>الفريق الثاني</h3>
-                <input type="color" id="color-t2" class="color-picker" value="#00f2ff">
-                <p style="margin-top: 10px;">تغيير اللون</p>
+            <h3>مدة السؤال</h3>
+            <div style="display:flex; gap:10px; justify-content:center; margin:20px 0;">
+                <button class="btn-small time-opt" onclick="setInitialTime(90, this)">1.5 د</button>
+                <button class="btn-small time-opt active" onclick="setInitialTime(120, this)" style="background:var(--accent-red)">2 د</button>
+                <button class="btn-small time-opt" onclick="setInitialTime(150, this)">2.5 د</button>
             </div>
+            <button class="btn-play" onclick="startGame()">ابدأ التحدي</button>
         </div>
-
-        <div style="text-align: center; margin-bottom: 40px;">
-            <h3>حدد مدة السؤال</h3>
-            <div class="timer-selector">
-                <button class="time-btn" onclick="setTime(90, this)">1.5 د</button>
-                <button class="time-btn selected" onclick="setTime(120, this)">2 د</button>
-                <button class="time-btn" onclick="setTime(150, this)">2.5 د</button>
-            </div>
-        </div>
-
-        <button class="btn-luxury" onclick="initGame()">ابدأ اللعب الآن</button>
     </section>
 
-    <!-- الشاشة 3: اللعبة -->
+    <!-- شاشة اللعبة -->
     <section id="screen-game" class="screen">
-        <div class="game-grid-container">
-            
-            <!-- لوحة الفريق الثاني (يسار) -->
-            <div class="side-panel">
-                <div class="score-display" id="panel-t2">
-                    <h2 id="name-t2">الفريق الثاني</h2>
-                    <div class="score-val" id="score-t2">0</div>
-                    <div class="rounds-count">الجولات: <span id="round-t2">0</span>/3</div>
-                    <div style="margin-top:10px;">
-                        <button onclick="updateScore('t2', 1)" style="padding:5px 10px">+</button>
-                        <button onclick="updateScore('t2', -1)" style="padding:5px 10px">-</button>
-                    </div>
+        <div class="game-container">
+            <!-- فريق 2 -->
+            <div class="side-panel" id="panel-t2">
+                <h2 id="name-t2" style="font-size: 28px;">الفريق الثاني</h2>
+                <div class="score-val" id="score-t2">0</div>
+                <p>الجولات: <span id="round-t2">0</span>/3</p>
+                <div style="margin: 15px 0;">
+                    <button class="btn-small" onclick="adjustScore(2, 1)">+</button>
+                    <button class="btn-small" onclick="adjustScore(2, -1)">-</button>
                 </div>
-                <div class="helper-grid" id="helpers-t2">
-                    <div class="helper-item" onclick="useHelper(this)"><span>إضافة وقت دقيقة</span> <input type="checkbox"></div>
-                    <div class="helper-item" onclick="useHelper(this)"><span>مساعدة من المقدم</span> <input type="checkbox"></div>
-                    <div class="helper-item" onclick="useHelper(this)"><span>البحث من الهاتف</span> <input type="checkbox"></div>
+                <div id="helpers-t2">
+                    <p style="font-size:12px; margin-bottom:5px;">وسائل المساعدة</p>
+                    <button class="btn-small" onclick="useHelper(this)" style="width:100%; margin-bottom:5px;">إضافة دقيقة</button>
+                    <button class="btn-small" onclick="useHelper(this)" style="width:100%; margin-bottom:5px;">مساعدة المقدم</button>
+                    <button class="btn-small" onclick="useHelper(this)" style="width:100%;">هاتف</button>
                 </div>
             </div>
 
             <!-- المنتصف -->
-            <div style="display: flex; flex-direction: column; align-items: center;">
-                <div class="timer-circle" id="timer-display">02:00</div>
+            <div style="text-align: center;">
+                <div class="timer-box" id="timer">02:00</div>
+                <div class="control-btns" style="justify-content: center; margin-bottom: 20px;">
+                    <button class="btn-small" id="btn-timer-toggle" onclick="toggleTimer()" style="background: white; color: black;">تشغيل المؤقت</button>
+                    <button class="btn-small" onclick="resetGameTimer()">إعادة تعيين</button>
+                </div>
                 <div class="hex-grid" id="grid"></div>
-                <div style="display: flex; gap: 20px; margin-top: 30px;">
-                    <button class="btn-luxury" style="padding: 10px 20px; font-size: 16px;" onclick="shuffleGrid()">تبديل الحروف عشوائياً</button>
-                    <button class="btn-luxury pulse" style="padding: 10px 20px; font-size: 16px; border-color: var(--accent-red);" onclick="startTimer()">تشغيل المؤقت</button>
-                </div>
+                <button class="btn-small" onclick="generateGrid()" style="margin-top: 20px;">تبديل الحروف عشوائياً</button>
             </div>
 
-            <!-- لوحة الفريق الأول (يمين) -->
-            <div class="side-panel">
-                <div class="score-display" id="panel-t1">
-                    <h2 id="name-t1">الفريق الأول</h2>
-                    <div class="score-val" id="score-t1">0</div>
-                    <div class="rounds-count">الجولات: <span id="round-t1">0</span>/3</div>
-                    <div style="margin-top:10px;">
-                        <button onclick="updateScore('t1', 1)" style="padding:5px 10px">+</button>
-                        <button onclick="updateScore('t1', -1)" style="padding:5px 10px">-</button>
-                    </div>
+            <!-- فريق 1 -->
+            <div class="side-panel" id="panel-t1">
+                <h2 id="name-t1" style="font-size: 28px;">الفريق الأول</h2>
+                <div class="score-val" id="score-t1">0</div>
+                <p>الجولات: <span id="round-t1">0</span>/3</p>
+                <div style="margin: 15px 0;">
+                    <button class="btn-small" onclick="adjustScore(1, 1)">+</button>
+                    <button class="btn-small" onclick="adjustScore(1, -1)">-</button>
                 </div>
-                <div class="helper-grid" id="helpers-t1">
-                    <div class="helper-item" onclick="useHelper(this)"><span>إضافة وقت دقيقة</span> <input type="checkbox"></div>
-                    <div class="helper-item" onclick="useHelper(this)"><span>مساعدة من المقدم</span> <input type="checkbox"></div>
-                    <div class="helper-item" onclick="useHelper(this)"><span>البحث من الهاتف</span> <input type="checkbox"></div>
+                <div id="helpers-t1">
+                    <p style="font-size:12px; margin-bottom:5px;">وسائل المساعدة</p>
+                    <button class="btn-small" onclick="useHelper(this)" style="width:100%; margin-bottom:5px;">إضافة دقيقة</button>
+                    <button class="btn-small" onclick="useHelper(this)" style="width:100%; margin-bottom:5px;">مساعدة المقدم</button>
+                    <button class="btn-small" onclick="useHelper(this)" style="width:100%;">هاتف</button>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- نافذة اختيار الفائز بالحرف -->
-    <div id="modal-winner" class="modal">
+    <!-- نافذة الاختيار -->
+    <div id="modal-choice" class="modal">
         <div class="modal-content">
-            <h2 id="modal-letter" style="font-size: 60px; color: var(--accent-red);">أ</h2>
-            <h3>من صاحب الإجابة الصحيحة؟</h3>
-            <div class="modal-btns">
-                <button id="btn-win-t2" onclick="confirmWinner(2)">الفريق الثاني</button>
-                <button id="btn-win-t1" onclick="confirmWinner(1)">الفريق الأول</button>
+            <h1 id="selected-letter" style="font-size: 80px; color: var(--gold);">أ</h1>
+            <div id="power-up-msg" style="color: #4ade80; margin-bottom: 20px; font-weight: bold;"></div>
+            <h3>من الفائز بهذا الحرف؟</h3>
+            <div style="display: flex; gap: 20px; margin-top: 30px;">
+                <button id="btn-choice-t2" onclick="assignHex(2)" style="padding: 20px 40px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer;">الفريق الثاني</button>
+                <button id="btn-choice-t1" onclick="assignHex(1)" style="padding: 20px 40px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer;">الفريق الأول</button>
             </div>
-            <button onclick="closeModal()" style="margin-top: 20px; background: none; color: gray; border: none; cursor: pointer;">إغلاق</button>
-        </div>
-    </div>
-
-    <!-- نافذة الفوز النهائي -->
-    <div id="modal-victory" class="modal">
-        <div class="modal-content">
-            <h1 style="font-size: 50px; color: var(--text-gold);">مبروووك!</h1>
-            <h2 id="winner-name">الفريق الأول هو البطل</h2>
-            <button class="btn-luxury" style="margin-top: 30px;" onclick="location.reload()">إعادة اللعبة بالكامل</button>
+            <button onclick="closeModal()" style="margin-top: 30px; background: none; border: none; color: gray; cursor: pointer;">إلغاء</button>
         </div>
     </div>
 
     <script>
-        let selectedTime = 120;
-        let timerRunning = false;
-        let timeLeft = 120;
-        let timerInterval;
-        let currentHex = null;
-        
-        let config = {
-            t1Color: '#ffa500',
-            t2Color: '#00f2ff',
-            scores: { t1: 0, t2: 0 },
-            rounds: { t1: 0, t2: 0 }
+        // --- إدارة الصوت ---
+        const sounds = {
+            click: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
+            tick: new Audio('https://assets.mixkit.co/active_storage/sfx/2544/2544-preview.mp3'),
+            victory: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
+            timeout: new Audio('https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3'),
+            powerup: new Audio('https://assets.mixkit.co/active_storage/sfx/1432/1432-preview.mp3')
         };
 
-        const letters = "أبتثجحخدذرزسشصضطظعغفقكلمنهوي";
+        let gameSettings = {
+            t1Color: '#ffa500',
+            t2Color: '#00f2ff',
+            initialTime: 120,
+            timeLeft: 120,
+            timerActive: false,
+            scores: { 1: 0, 2: 0 },
+            rounds: { 1: 0, 2: 0 }
+        };
+
+        let currentHexIdx = null;
+        let gridData = []; // لتخزين معلومات الخلايا
 
         function goTo(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        function setTime(sec, btn) {
-            selectedTime = sec;
-            timeLeft = sec;
-            document.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
+        function setInitialTime(sec, btn) {
+            gameSettings.initialTime = sec;
+            gameSettings.timeLeft = sec;
+            document.querySelectorAll('.time-opt').forEach(b => b.style.background = 'var(--glass)');
+            btn.style.background = 'var(--accent-red)';
             updateTimerDisplay();
         }
 
-        function initGame() {
-            config.t1Color = document.getElementById('color-t1').value;
-            config.t2Color = document.getElementById('color-t2').value;
+        function startGame() {
+            gameSettings.t1Color = document.getElementById('t1-color').value;
+            gameSettings.t2Color = document.getElementById('t2-color').value;
             
-            // تطبيق الألوان
-            document.getElementById('panel-t1').style.borderColor = config.t1Color;
-            document.getElementById('name-t1').style.color = config.t1Color;
-            document.getElementById('btn-win-t1').style.background = config.t1Color;
+            // تطبيق الألوان على الواجهة
+            document.getElementById('name-t1').style.color = gameSettings.t1Color;
+            document.getElementById('panel-t1').style.borderColor = gameSettings.t1Color;
+            document.getElementById('btn-choice-t1').style.background = gameSettings.t1Color;
 
-            document.getElementById('panel-t2').style.borderColor = config.t2Color;
-            document.getElementById('name-t2').style.color = config.t2Color;
-            document.getElementById('btn-win-t2').style.background = config.t2Color;
+            document.getElementById('name-t2').style.color = gameSettings.t2Color;
+            document.getElementById('panel-t2').style.borderColor = gameSettings.t2Color;
+            document.getElementById('btn-choice-t2').style.background = gameSettings.t2Color;
 
-            shuffleGrid();
+            generateGrid();
             goTo('screen-game');
         }
 
-        function shuffleGrid() {
+        // --- نظام الخلايا والبطاقات ---
+        function generateGrid() {
             const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            let chars = letters.split('').sort(() => Math.random() - 0.5);
-            
-            for(let i=0; i<25; i++) {
-                let hex = document.createElement('div');
+            gridData = [];
+            const letters = "أبتثجحخدذرزسشصضطظعغفقكلمنهوي".split('').sort(() => Math.random() - 0.5);
+
+            for (let i = 0; i < 25; i++) {
+                let powerUp = null;
+                const rand = Math.random();
+                if (rand < 0.05) powerUp = 'gold'; // 5% فرصة نقطة ذهبية
+                else if (rand < 0.1) powerUp = 'bomb'; // 5% فرصة قنبلة
+
+                gridData.push({ id: i, owner: null, powerUp: powerUp, letter: letters[i] });
+
+                const hex = document.createElement('div');
                 hex.className = 'hexagon';
-                hex.innerText = chars[i] || '؟';
-                hex.onclick = () => openWinnerModal(hex);
+                hex.id = `hex-${i}`;
+                hex.innerText = letters[i];
+                hex.onclick = () => handleHexClick(i);
                 grid.appendChild(hex);
             }
         }
 
-        function openWinnerModal(hex) {
-            currentHex = hex;
-            document.getElementById('modal-letter').innerText = hex.innerText;
-            document.getElementById('modal-winner').style.display = 'flex';
+        function handleHexClick(idx) {
+            if (gridData[idx].owner) return;
+            sounds.click.play();
+            currentHexIdx = idx;
+            document.getElementById('selected-letter').innerText = gridData[idx].letter;
+            
+            const msg = document.getElementById('power-up-msg');
+            msg.innerText = "";
+            if(gridData[idx].powerUp === 'gold') msg.innerText = "⚡ بطاقة ذهبية: الفريق الفائز يحصل على نقطتين!";
+            if(gridData[idx].powerUp === 'bomb') msg.innerText = "💣 فخ: الفريق الخاسر يخصم منه نقطة!";
+
+            document.getElementById('modal-choice').style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('modal-winner').style.display = 'none';
-        }
+        function assignHex(team) {
+            const hexObj = gridData[currentHexIdx];
+            hexObj.owner = team;
+            const hexEl = document.getElementById(`hex-${currentHexIdx}`);
+            hexEl.style.background = (team === 1) ? gameSettings.t1Color : gameSettings.t2Color;
+            hexEl.classList.add('owned');
 
-        function confirmWinner(teamId) {
-            const color = (teamId === 1) ? config.t1Color : config.t2Color;
-            currentHex.style.background = color;
-            currentHex.dataset.owner = teamId;
+            // منطق البطاقات
+            if(hexObj.powerUp === 'gold') {
+                sounds.powerup.play();
+                adjustScore(team, 2);
+            } else {
+                adjustScore(team, 1);
+            }
+            
+            if(hexObj.powerUp === 'bomb') {
+                sounds.timeout.play();
+                adjustScore(team === 1 ? 2 : 1, -1);
+            }
+
             closeModal();
-            checkWinCondition(teamId);
+            checkVictoryPath(team);
         }
 
-        function updateScore(team, val) {
-            config.scores[team] += val;
-            if(config.scores[team] < 0) config.scores[team] = 0;
-            document.getElementById(`score-${team}`).innerText = config.scores[team];
-        }
+        // --- نظام المسار الذكي (BFS Algorithm) ---
+        function checkVictoryPath(team) {
+            const size = 5;
+            let startNodes = [];
+            let targetNodes = [];
 
-        function startTimer() {
-            if(timerRunning) return;
-            timerRunning = true;
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                updateTimerDisplay();
-                if(timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    timerRunning = false;
-                    alert("انتهى الوقت!");
+            if (team === 1) { // من الأعلى (0-4) للأسفل (20-24)
+                for(let i=0; i<5; i++) if(gridData[i].owner === 1) startNodes.push(i);
+                for(let i=20; i<25; i++) if(gridData[i].owner === 1) targetNodes.push(i);
+            } else { // من اليمين لليسار
+                for(let i=0; i<25; i+=5) if(gridData[i].owner === 2) startNodes.push(i);
+                for(let i=4; i<25; i+=5) if(gridData[i].owner === 2) targetNodes.push(i);
+            }
+
+            for(let start of startNodes) {
+                let visited = new Set();
+                let queue = [[start]];
+                while(queue.length > 0) {
+                    let path = queue.shift();
+                    let node = path[path.length - 1];
+                    if(targetNodes.includes(node)) {
+                        triggerWin(team, path);
+                        return;
+                    }
+                    if(!visited.has(node)) {
+                        visited.add(node);
+                        getNeighbors(node).forEach(neighbor => {
+                            if(gridData[neighbor].owner === team) {
+                                queue.push([...path, neighbor]);
+                            }
+                        });
+                    }
                 }
-            }, 1000);
+            }
+        }
+
+        function getNeighbors(idx) {
+            const row = Math.floor(idx / 5);
+            const col = idx % 5;
+            let neighbors = [];
+            const potential = [
+                [row, col-1], [row, col+1], [row-1, col], [row+1, col],
+                [row-1, col+1], [row+1, col-1] // تبسيط للمسار السداسي
+            ];
+            potential.forEach(([r, c]) => {
+                if(r >=0 && r < 5 && c >= 0 && c < 5) neighbors.push(r * 5 + c);
+            });
+            return neighbors;
+        }
+
+        function triggerWin(team, path) {
+            sounds.victory.play();
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            
+            path.forEach(idx => document.getElementById(`hex-${idx}`).classList.add('winner-path'));
+
+            setTimeout(() => {
+                gameSettings.rounds[team]++;
+                document.getElementById(`round-${team}`).innerText = gameSettings.rounds[team];
+                if(gameSettings.rounds[team] >= 3) {
+                    alert(`🏆 مبروك! الفريق ${team === 1 ? 'الأول' : 'الثاني'} فاز باللعبة كاملة!`);
+                    location.reload();
+                } else {
+                    alert(`فاز الفريق ${team} بهذه الجولة!`);
+                    generateGrid();
+                }
+            }, 2000);
+        }
+
+        // --- نظام المؤقت المطور ---
+        let timerInterval;
+        function toggleTimer() {
+            const btn = document.getElementById('btn-timer-toggle');
+            if(gameSettings.timerActive) {
+                clearInterval(timerInterval);
+                gameSettings.timerActive = false;
+                btn.innerText = "استئناف";
+                btn.style.background = "white";
+            } else {
+                gameSettings.timerActive = true;
+                btn.innerText = "إيقاف مؤقت";
+                btn.style.background = "var(--accent-red)";
+                timerInterval = setInterval(() => {
+                    gameSettings.timeLeft--;
+                    updateTimerDisplay();
+                    
+                    // صوت التكتكة
+                    if(gameSettings.timeLeft <= 10) {
+                        sounds.tick.playbackRate = 2.0; // تسريع الصوت آخر 10 ثواني
+                        sounds.tick.play();
+                    } else {
+                        sounds.tick.playbackRate = 1.0;
+                        sounds.tick.play();
+                    }
+
+                    if(gameSettings.timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        sounds.timeout.play();
+                        alert("انتهى الوقت!");
+                        resetGameTimer();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetGameTimer() {
+            clearInterval(timerInterval);
+            gameSettings.timerActive = false;
+            gameSettings.timeLeft = gameSettings.initialTime;
+            document.getElementById('btn-timer-toggle').innerText = "تشغيل المؤقت";
+            document.getElementById('btn-timer-toggle').style.background = "white";
+            updateTimerDisplay();
         }
 
         function updateTimerDisplay() {
-            let m = Math.floor(timeLeft / 60);
-            let s = timeLeft % 60;
-            document.getElementById('timer-display').innerText = 
-                `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            let m = Math.floor(gameSettings.timeLeft / 60);
+            let s = gameSettings.timeLeft % 60;
+            document.getElementById('timer').innerText = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
         }
 
-        function useHelper(el) {
-            el.classList.add('used');
-            el.querySelector('input').checked = true;
+        function adjustScore(team, val) {
+            gameSettings.scores[team] += val;
+            if(gameSettings.scores[team] < 0) gameSettings.scores[team] = 0;
+            document.getElementById(`score-${team}`).innerText = gameSettings.scores[team];
         }
 
-        // منطق الفوز (ربط من الأعلى للأسفل)
-        function checkWinCondition(teamId) {
-            const hexes = document.querySelectorAll('.hexagon');
-            const ownerHexes = Array.from(hexes).filter(h => h.dataset.owner == teamId);
-            
-            // هنا نتحقق إذا وصل الفريق لعدد معين أو نترك للمقدم إنهاء الجولة
-            // سأقوم بإضافة تنبيه بسيط عند تحقيق 5 خلايا كمثال
-            if(ownerHexes.length >= 7) {
-                 // يمكنك هنا استدعاء winRound(teamId) تلقائياً إذا أردت
-            }
-            
-            // إضافة زر لإنهاء الجولة يدوياً للمقدم
-            if(!document.getElementById('win-round-btn')) {
-                let btn = document.createElement('button');
-                btn.id = 'win-round-btn';
-                btn.className = 'btn-luxury';
-                btn.style.position = 'fixed'; btn.style.bottom = '20px';
-                btn.innerText = "إنهاء الجولة لصالح الفريق المكتمل";
-                btn.onclick = () => {
-                    let team = prompt("ادخل رقم الفريق الفائز بالجولة (1 أو 2)");
-                    if(team) winRound(parseInt(team));
-                };
-                document.body.appendChild(btn);
-            }
+        function useHelper(btn) {
+            btn.style.opacity = "0.2";
+            btn.onclick = null;
+            btn.innerText = "❌ مستخدم";
+            sounds.powerup.play();
         }
 
-        function winRound(teamId) {
-            config.rounds[`t${teamId}`]++;
-            document.getElementById(`round-t${teamId}`).innerText = config.rounds[`t${teamId}`];
-            
-            if(config.rounds[`t${teamId}`] >= 3) {
-                document.getElementById('winner-name').innerText = `الفريق ${teamId === 1 ? 'الأول' : 'الثاني'} هو البطل النهائي`;
-                document.getElementById('modal-victory').style.display = 'flex';
-            } else {
-                alert(`مبروك للفريق ${teamId} الفوز بهذه الجولة! جولة جديدة ستبدأ.`);
-                shuffleGrid();
-                timeLeft = selectedTime;
-                updateTimerDisplay();
-                clearInterval(timerInterval);
-                timerRunning = false;
-            }
-        }
+        function closeModal() { document.getElementById('modal-choice').style.display = 'none'; }
     </script>
 </body>
 </html>
