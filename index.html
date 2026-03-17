@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خلية الحروف Pro - H7MODI77</title>
+    <title>حروف مع حموووووود Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <!-- مكتبة الاحتفالات -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -50,8 +50,22 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        .main-title { font-size: 80px; font-weight: 900; line-height: 1; margin-bottom: 10px; }
-        .main-title span { color: var(--accent-red); text-shadow: 0 0 30px rgba(239, 68, 68, 0.5); }
+        .main-title {
+            font-size: 80px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 10px;
+            text-align: center;
+            color: white; /* اللون الافتراضي للنص الأبيض */
+        }
+        .main-title .highlight {
+            display: block; /* "مع حموووووود" ستبدأ في سطر جديد */
+            font-size: 0.7em; /* حجم أصغر نسبياً */
+            color: var(--gold); /* لون ذهبي مميز */
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.7); /* توهج ذهبي */
+            margin-top: 10px; /* مسافة من السطر العلوي */
+            line-height: 1.2;
+        }
 
         .btn-play {
             background: white; color: black; border: none; padding: 15px 50px;
@@ -110,8 +124,8 @@
     <!-- شاشة البداية -->
     <section id="screen-start" class="screen active">
         <div class="luxury-card">
-            <h1 class="main-title">خلية<br><span>الحروف</span></h1>
-            <p style="color: var(--accent-red); font-weight: bold; margin-bottom: 20px;">النسخة الاحترافية (H7MODI77)</p>
+            <h1 class="main-title">حروف <br><span class="highlight">مع حموووووود</span></h1>
+            <p style="color: var(--accent-red); font-weight: bold; margin-bottom: 20px;">النسخة الاحترافية</p>
             <div style="text-align: right; margin: 20px 0; font-size: 18px; opacity: 0.8;">
                 <p>✔ نظام كشف المسار الآلي</p>
                 <p>✔ بطاقات طاقة عشوائية</p>
@@ -137,9 +151,9 @@
             </div>
             <h3>مدة السؤال</h3>
             <div style="display:flex; gap:10px; justify-content:center; margin:20px 0;">
-                <button class="btn-small time-opt" onclick="setInitialTime(90, this)">1.5 د</button>
-                <button class="btn-small time-opt active" onclick="setInitialTime(120, this)" style="background:var(--accent-red)">2 د</button>
-                <button class="btn-small time-opt" onclick="setInitialTime(150, this)">2.5 د</button>
+                <button class="btn-small time-opt" onclick="setInitialTime(30, this)">30 ث</button>
+                <button class="btn-small time-opt active" onclick="setInitialTime(45, this)" style="background:var(--accent-red)">45 ث</button>
+                <button class="btn-small time-opt" onclick="setInitialTime(60, this)">1 د</button>
             </div>
             <button class="btn-play" onclick="startGame()">ابدأ التحدي</button>
         </div>
@@ -167,10 +181,11 @@
 
             <!-- المنتصف -->
             <div style="text-align: center;">
-                <div class="timer-box" id="timer">02:00</div>
+                <div class="timer-box" id="timer">00:45</div>
                 <div class="control-btns" style="justify-content: center; margin-bottom: 20px;">
                     <button class="btn-small" id="btn-timer-toggle" onclick="toggleTimer()" style="background: white; color: black;">تشغيل المؤقت</button>
                     <button class="btn-small" onclick="resetGameTimer()">إعادة تعيين</button>
+                    <button class="btn-small btn-end-game" onclick="location.reload()" style="background: var(--accent-red);">إنهاء اللعبة</button>
                 </div>
                 <div class="hex-grid" id="grid"></div>
                 <button class="btn-small" onclick="generateGrid()" style="margin-top: 20px;">تبديل الحروف عشوائياً</button>
@@ -222,8 +237,8 @@
         let gameSettings = {
             t1Color: '#ffa500',
             t2Color: '#00f2ff',
-            initialTime: 120,
-            timeLeft: 120,
+            initialTime: 45, // تم تعديل الوقت الافتراضي
+            timeLeft: 45,    // تم تعديل الوقت الافتراضي
             timerActive: false,
             scores: { 1: 0, 2: 0 },
             rounds: { 1: 0, 2: 0 }
@@ -364,10 +379,20 @@
             const row = Math.floor(idx / 5);
             const col = idx % 5;
             let neighbors = [];
+            // اتجاهات الجيران في شبكة سداسية
             const potential = [
-                [row, col-1], [row, col+1], [row-1, col], [row+1, col],
-                [row-1, col+1], [row+1, col-1] // تبسيط للمسار السداسي
+                [row, col-1], [row, col+1], // يسار يمين
+                [row-1, col], [row+1, col] // أعلى أسفل (في نفس العمود)
             ];
+            // الجيران المائلون يعتمدون على الزوجي والفردي للصف
+            if (row % 2 === 0) { // صف زوجي
+                potential.push([row-1, col-1]); // أعلى يسار
+                potential.push([row+1, col-1]); // أسفل يسار
+            } else { // صف فردي
+                potential.push([row-1, col+1]); // أعلى يمين
+                potential.push([row+1, col+1]); // أسفل يمين
+            }
+
             potential.forEach(([r, c]) => {
                 if(r >=0 && r < 5 && c >= 0 && c < 5) neighbors.push(r * 5 + c);
             });
@@ -411,10 +436,10 @@
                     updateTimerDisplay();
                     
                     // صوت التكتكة
-                    if(gameSettings.timeLeft <= 10) {
+                    if(gameSettings.timeLeft > 0 && gameSettings.timeLeft <= 10) {
                         sounds.tick.playbackRate = 2.0; // تسريع الصوت آخر 10 ثواني
                         sounds.tick.play();
-                    } else {
+                    } else if (gameSettings.timeLeft > 10) {
                         sounds.tick.playbackRate = 1.0;
                         sounds.tick.play();
                     }
