@@ -3,262 +3,320 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حروف مع حموووووود - الإصدار الموسوعي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Reem+Kufi:wght@700&display=swap" rel="stylesheet">
+    <title>حروف مع حموووووود - الإصدار الذكي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     
     <style>
         :root {
-            --bg-deep: #020617;
-            --accent-red: #ef4444;
-            --gold: #fbbf24;
+            --bg: #030712;
+            --accent: #ef4444;
+            --gold: #f59e0b;
             --t1-color: #ffa500;
             --t2-color: #00f2ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background: var(--bg-deep); color: white; height: 100vh; overflow: hidden; }
+        body { background: var(--bg); color: white; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; background-image: radial-gradient(circle at center, #111827 0%, #030712 100%); }
 
-        /* التصاميم العامة */
-        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; background-image: radial-gradient(circle at 50% 50%, #111827 0%, #020617 100%); }
-        .screen.active { display: flex; }
+        /* شاشة البداية */
+        .screen { position: absolute; width: 100%; height: 100%; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; }
+        .screen.active { display: flex; animation: fadeIn 0.8s ease forwards; }
 
-        .game-logo { font-family: 'Reem Kufi', sans-serif; font-size: 60px; background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 20px; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        .btn-main { background: linear-gradient(45deg, var(--accent-red), #991b1b); color: white; border: none; padding: 12px 30px; font-size: 20px; font-weight: 900; border-radius: 12px; cursor: pointer; transition: 0.3s; margin: 5px; }
-        .btn-main:hover { transform: scale(1.05); filter: brightness(1.2); }
+        .logo-main { font-family: 'Aref Ruqaa', serif; font-size: 80px; background: linear-gradient(to bottom, #fff, var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.5)); margin-bottom: 40px; }
 
-        /* الموسوعة */
-        #screen-questions { background: #0f172a; overflow-y: auto; padding: 50px; }
-        .letter-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 15px; width: 100%; max-width: 800px; }
-        .letter-btn { background: var(--glass); border: 1px solid var(--gold); color: var(--gold); padding: 20px; font-size: 24px; border-radius: 10px; cursor: pointer; }
-        .letter-btn:hover { background: var(--gold); color: black; }
+        /* الأزرار */
+        .btn-luxury { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); color: white; padding: 15px 40px; font-size: 20px; font-weight: bold; border-radius: 50px; cursor: pointer; transition: 0.3s; backdrop-filter: blur(10px); }
+        .btn-luxury:hover { background: white; color: black; box-shadow: 0 0 30px white; transform: translateY(-3px); }
 
-        /* الخلية المتداخلة */
-        .hex-grid { display: grid; grid-template-columns: repeat(5, 90px); gap: 10px; padding: 20px; margin-top: 20px; position: relative; }
-        .hexagon { width: 90px; height: 104px; background: var(--accent-red); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; align-items: center; justify-content: center; font-size: 35px; font-weight: 900; cursor: pointer; transition: 0.3s; }
+        /* الخلية الذكية */
+        .game-layout { display: flex; width: 100%; max-width: 1400px; justify-content: space-between; align-items: center; }
         
-        /* تأثير العفسة (الإزاحة) */
+        .hex-grid { display: grid; grid-template-columns: repeat(5, 100px); gap: 10px; padding: 20px; perspective: 1000px; }
+        .hexagon { 
+            width: 100px; height: 115px; background: #1f2937; 
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 40px; font-weight: 900; cursor: pointer; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        /* إزاحة ذكية للأسطر لخلق شكل الخلية المعفوسة */
         .hex-grid div:nth-child(10n+6), .hex-grid div:nth-child(10n+7), .hex-grid div:nth-child(10n+8), .hex-grid div:nth-child(10n+9), .hex-grid div:nth-child(10n+10) {
-            transform: translateX(45px);
+            transform: translateX(55px);
         }
 
-        .side-panel { width: 250px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); text-align: center; }
-        .score-num { font-size: 60px; font-weight: 900; }
-        .timer-display { font-size: 50px; font-weight: 900; font-family: monospace; }
-
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 3000; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 20px; border: 2px solid var(--gold); max-width: 600px; width: 100%; text-align: center; }
+        .hexagon:hover { transform: scale(1.1) rotateY(10deg); filter: brightness(1.5); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+        .hexagon.owned-1 { background: var(--t1-color); color: white; text-shadow: 0 0 10px black; animation: pop 0.3s ease; }
+        .hexagon.owned-2 { background: var(--t2-color); color: white; text-shadow: 0 0 10px black; animation: pop 0.3s ease; }
         
-        .helper-btn { width: 100%; padding: 10px; margin-top: 5px; background: #1e293b; border: 1px solid #334155; color: white; cursor: pointer; border-radius: 5px; font-size: 14px; }
-        .helper-btn.used { opacity: 0.3; pointer-events: none; text-decoration: line-through; }
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+        /* لوحات التحكم */
+        .panel { width: 300px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 30px; text-align: center; backdrop-filter: blur(20px); }
+        .score { font-size: 80px; font-weight: 900; margin: 10px 0; line-height: 1; }
+        .round-dots { display: flex; justify-content: center; gap: 10px; margin-top: 10px; }
+        .dot { width: 15px; height: 15px; border-radius: 50%; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); }
+        .dot.active { background: var(--gold); box-shadow: 0 0 15px var(--gold); }
+
+        .timer-circle { font-size: 60px; font-weight: 900; font-family: monospace; margin-bottom: 20px; color: #fff; }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 100; }
+        .modal-content { background: #111; padding: 40px; border-radius: 30px; border: 2px solid var(--gold); text-align: center; }
+        .modal-btns { display: flex; gap: 20px; margin-top: 30px; }
+        .modal-btns button { padding: 15px 30px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer; font-size: 20px; transition: 0.3s; }
     </style>
 </head>
 <body>
 
-    <!-- شاشة البداية -->
+    <!-- شاشة 1: البداية -->
     <section id="screen-start" class="screen active">
-        <h1 class="game-logo">حروف مع حموووووود</h1>
-        <button class="btn-main" onclick="goTo('screen-setup')">ابدأ اللعب</button>
-        <button class="btn-main" style="background: var(--gold); color: black;" onclick="openEncyclopedia()">موسوعة الأسئلة</button>
-    </section>
-
-    <!-- شاشة الموسوعة -->
-    <section id="screen-questions" class="screen">
-        <button class="btn-main" style="position:fixed; top:20px; right:20px;" onclick="goTo('screen-start')">عودة ←</button>
-        <h2 style="margin-bottom: 30px; color: var(--gold);">موسوعة الأسئلة (صعوبة عالية)</h2>
-        <div class="letter-grid" id="encyclopedia-letters"></div>
-    </section>
-
-    <!-- شاشة الإعدادات -->
-    <section id="screen-setup" class="screen">
-        <div class="modal-content">
-            <h2>إعدادات المواجهة</h2>
-            <div style="display:flex; gap:20px; margin:20px 0;">
-                <div style="flex:1">فريق 1: <input type="color" id="t1-color" value="#ffa500"></div>
-                <div style="flex:1">فريق 2: <input type="color" id="t2-color" value="#00f2ff"></div>
-            </div>
-            <p>وقت السؤال:</p>
-            <button class="btn-main" onclick="setT(30)">30 ث</button>
-            <button class="btn-main" onclick="setT(45)">45 ث</button>
-            <button class="btn-main" onclick="setT(60)">60 ث</button>
-            <br><br>
-            <button class="btn-main" style="width:100%" onclick="initGame()">دخول اللعبة</button>
+        <h1 class="logo-main">حروف مع حموووووود</h1>
+        <div style="display: flex; gap: 20px;">
+            <button class="btn-luxury" onclick="showScreen('screen-setup')">بدء اللعبة</button>
         </div>
     </section>
 
-    <!-- شاشة اللعبة -->
+    <!-- شاشة 2: الإعدادات -->
+    <section id="screen-setup" class="screen">
+        <div class="panel" style="width: 500px;">
+            <h2 style="margin-bottom: 30px;">تجهيز المواجهة</h2>
+            <div style="display: flex; gap: 20px; margin-bottom: 30px;">
+                <div style="flex:1">
+                    <p>لون الفريق 1</p>
+                    <input type="color" id="color-t1" value="#ffa500" style="width:100%; height:50px; border:none; background:none; cursor:pointer;">
+                </div>
+                <div style="flex:1">
+                    <p>لون الفريق 2</p>
+                    <input type="color" id="color-t2" value="#00f2ff" style="width:100%; height:50px; border:none; background:none; cursor:pointer;">
+                </div>
+            </div>
+            <p>وقت السؤال</p>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 30px;">
+                <button class="btn-luxury" style="padding:10px 20px" onclick="setT(30)">30ث</button>
+                <button class="btn-luxury" style="padding:10px 20px" onclick="setT(45)">45ث</button>
+                <button class="btn-luxury" style="padding:10px 20px" onclick="setT(60)">60ث</button>
+            </div>
+            <button class="btn-luxury" style="width:100%; background: var(--gold); color: black;" onclick="startGame()">دخول الحلبة</button>
+        </div>
+    </section>
+
+    <!-- شاشة 3: اللعبة -->
     <section id="screen-game" class="screen">
-        <button onclick="location.reload()" style="position:fixed; top:10px; left:10px; color:red; background:none; border:none; cursor:pointer;">إنهاء اللعبة X</button>
-        
-        <div style="display:flex; width:100%; justify-content:space-around; align-items:center;">
+        <div class="game-layout">
+            
             <!-- فريق 2 -->
-            <div class="side-panel" style="border-top: 4px solid var(--t2-color);">
-                <h2 id="name-t2">الفريق الثاني</h2>
-                <div class="score-num" id="score-2">0</div>
-                <button onclick="modScore(2, 1)">+</button> <button onclick="modScore(2, -1)">-</button>
-                <div style="margin-top:20px;">
-                    <button class="helper-btn" onclick="helpTime(this)">+ إضافة وقت</button>
-                    <button class="helper-btn" onclick="helpHint(this)">؟ تلميح المقدم</button>
+            <div class="panel" id="panel-t2">
+                <h2 id="name-t2" style="color: var(--t2-color);">الفريق الثاني</h2>
+                <div class="score" id="score-2">0</div>
+                <div style="margin-bottom: 20px;">
+                    <button onclick="changeScore(2, 1)" style="padding:5px 15px">+</button>
+                    <button onclick="changeScore(2, -1)" style="padding:5px 15px">-</button>
+                </div>
+                <div class="round-dots" id="rounds-2">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
                 </div>
             </div>
 
             <!-- المنتصف -->
-            <div style="text-align:center">
-                <div class="timer-display" id="timer-box">00:45</div>
-                <button class="btn-main" id="timer-ctrl" onclick="toggleTimer()">تشغيل</button>
-                <div class="hex-grid" id="game-grid"></div>
+            <div style="text-align: center;">
+                <div class="timer-circle" id="timer">00:45</div>
+                <div style="margin-bottom: 20px;">
+                    <button class="btn-luxury" style="font-size:14px; padding:10px 20px;" onclick="toggleTimer()" id="btn-timer">تشغيل</button>
+                    <button class="btn-luxury" style="font-size:14px; padding:10px 20px;" onclick="resetTimer()">إعادة</button>
+                </div>
+                <div class="hex-grid" id="grid"></div>
+                <button class="btn-luxury" style="margin-top: 25px; font-size:14px;" onclick="shuffleLetters()">تبديل الحروف عشوائياً 🔄</button>
             </div>
 
             <!-- فريق 1 -->
-            <div class="side-panel" style="border-top: 4px solid var(--t1-color);">
-                <h2 id="name-t1">الفريق الأول</h2>
-                <div class="score-num" id="score-1">0</div>
-                <button onclick="modScore(1, 1)">+</button> <button onclick="modScore(1, -1)">-</button>
-                <div style="margin-top:20px;">
-                    <button class="helper-btn" onclick="helpTime(this)">+ إضافة وقت</button>
-                    <button class="helper-btn" onclick="helpHint(this)">؟ تلميح المقدم</button>
+            <div class="panel" id="panel-t1">
+                <h2 id="name-t1" style="color: var(--t1-color);">الفريق الأول</h2>
+                <div class="score" id="score-1">0</div>
+                <div style="margin-bottom: 20px;">
+                    <button onclick="changeScore(1, 1)" style="padding:5px 15px">+</button>
+                    <button onclick="changeScore(1, -1)" style="padding:5px 15px">-</button>
+                </div>
+                <div class="round-dots" id="rounds-1">
+                    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
                 </div>
             </div>
+
         </div>
+        <button onclick="location.reload()" style="position:fixed; bottom:20px; left:20px; color:gray; background:none; border:none; cursor:pointer;">إنهاء وإعادة كل شيء X</button>
     </section>
 
-    <!-- مودال استعراض أسئلة الحرف -->
-    <div id="modal-ency" class="modal">
-        <div class="modal-content" style="max-height:80vh; overflow-y:auto;">
-            <h1 id="ency-letter" style="color:var(--gold); font-size:50px;">أ</h1>
-            <button class="btn-main" onclick="pickRandomEnc()">سؤال عشوائي لهذا الحرف</button>
-            <hr style="margin:20px 0; opacity:0.2;">
-            <div id="ency-list" style="text-align:right; line-height:1.8;"></div>
-            <button class="btn-main" style="background:gray" onclick="closeM('modal-ency')">إغلاق</button>
-        </div>
-    </div>
-
-    <!-- مودال اللعب (سؤال الحرف) -->
-    <div id="modal-play" class="modal">
+    <!-- Modal الاختيار -->
+    <div id="modal-choice" class="modal">
         <div class="modal-content">
-            <h1 id="play-letter" style="font-size:80px; color:var(--gold);">؟</h1>
-            <p id="play-q" style="font-size:22px; margin:20px 0; font-weight:bold;"></p>
-            <div style="display:flex; gap:10px; justify-content:center;">
-                <button id="p-btn-2" class="btn-main" onclick="winHex(2)">فريق 2</button>
-                <button id="p-btn-1" class="btn-main" onclick="winHex(1)">فريق 1</button>
+            <h1 id="modal-letter" style="font-size: 100px; color: var(--gold);">أ</h1>
+            <h3>من الفريق الذي أجاب صح؟</h3>
+            <div class="modal-btns">
+                <button id="btn-win-2" onclick="assignHex(2)">الفريق الثاني</button>
+                <button id="btn-win-1" onclick="assignHex(1)">الفريق الأول</button>
             </div>
-            <button onclick="closeM('modal-play')" style="margin-top:20px; color:gray; background:none; border:none; cursor:pointer;">تخطي</button>
+            <button onclick="document.getElementById('modal-choice').style.display='none'" style="margin-top:20px; background:none; color:gray; border:none; cursor:pointer;">إلغاء</button>
         </div>
     </div>
 
     <script>
-        // بنك الأسئلة (نموذج مكثف وصعب وغير ديني)
-        const qBank = {
-            "أ": ["أبعد كوكب عن الشمس في نظامنا الشمسي؟ (نبتون - يبدأ بـ 'أ' في 'أبعد')", "أصغر دولة في العالم من حيث المساحة؟ (الفاتيكان)", "أول عنصر في الجدول الدوري؟ (الهيدروجين)", "أديب روسي صاحب رواية الجريمة والعقاب؟ (دوستويفسكي)", "أكبر عضلة في جسم الإنسان؟ (عضلة الفخذ)", "أول من حصل على جائزة نوبل في الفيزياء؟ (رونتجن)", "أعمق نقطة في المحيطات تسمى خندق...؟ (ماريانا)", "أعلى شلالات في العالم تقع في فنزويلا؟ (أنجل)", "أول لغة برمجة عالية المستوى؟ (فورتران)", "أصغر عظمة في جسم الإنسان؟ (الركاب)"],
-            "ب": ["بحر يحد أوزبكستان وكازاخستان وجف معظمه؟ (آرال)", "بروتين في خلايا الدم الحمراء يحمل الأكسجين؟ (هيموجلوبين)", "بعثة علمية قادها داروين؟ (بيجل)", "بلد الـ 1000 بحيرة؟ (فنلندا)", "بوابة مشتعلة بالغاز في تركمانستان تسمى بوابة...؟ (جهنم)", "بركان دمر مدينة بومبي الرومانية؟ (فيزوف)", "بحر لا يوجد له شواطئ برية؟ (سارجاسو)", "بطل رواية 'البؤساء' لفيكتور هوجو؟ (جان فالجان)", "بحر يفصل بين بريطانيا وفرنسا؟ (المانش)", "بناء تاريخي في الهند بناه شاه جيهان؟ (تاج محل)"],
-            "ت": ["تمثال يمثل الحكمة والجمال في اليونان القديمة؟ (أثينا)", "تحول المادة من الحالة الصلبة إلى الغازية مباشرة؟ (تسامي)", "تاريخ سقوط جدار برلين؟ (1989)", "ثاني أطول نهر في العالم؟ (الأمازون - يبدأ بـ 'ت' في 'ثاني')", "تعدين العملات الرقمية يسمى بـ...؟ (ماينينج)", "ثقب أسود يقع في مركز مجرتنا؟ (ساجيتاريوس أ)", "تمثال الحرية كان هدية من أي دولة؟ (فرنسا)", "تقنية الاتصال اللاسلكي لمسافات قصيرة؟ (بلوتوث)", "تجمع سكاني هو الأعلى كثافة في العالم؟ (ماكاو)", "تخصص علمي يدرس الزلازل؟ (سيزمولوجيا)"]
-            // ... يمكنك إكمال الحروف (ج، ح، خ...) بنفس النمط
-        };
+        let config = { t1C: '#ffa500', t2C: '#00f2ff', time: 45, left: 45, running: false, s1:0, s2:0, r1:0, r2:0 };
+        let currentIdx = null;
+        let hexStates = Array(25).fill(null);
+        let timerInt;
 
-        const letters = "أبتثجحخدذرزسشصضطظعغفقكلمنهوي".split('');
-        let cfg = { t: 45, left: 45, on: false, s1:0, s2:0 };
-        let curH = null;
-        let timer;
-
-        function goTo(id) { document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-        function setT(v) { cfg.t = v; cfg.left = v; updateT(); }
-        function closeM(id) { document.getElementById(id).style.display='none'; }
-
-        // تهيئة الموسوعة
-        function openEncyclopedia() {
-            const container = document.getElementById('encyclopedia-letters');
-            container.innerHTML = '';
-            letters.forEach(l => {
-                const b = document.createElement('button');
-                b.className = 'letter-btn';
-                b.innerText = l;
-                b.onclick = () => showEnc(l);
-                container.appendChild(b);
-            });
-            goTo('screen-questions');
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
 
-        function showEnc(l) {
-            document.getElementById('ency-letter').innerText = l;
-            const list = document.getElementById('ency-list');
-            list.innerHTML = (qBank[l] || ["قريباً.."]).map((q, i) => `<p>${i+1}. ${q}</p>`).join('');
-            document.getElementById('modal-ency').style.display='flex';
+        function setT(v) { config.time = v; config.left = v; updateTimerUI(); }
+
+        function startGame() {
+            config.t1C = document.getElementById('color-t1').value;
+            config.t2C = document.getElementById('color-t2').value;
+            document.getElementById('name-t1').style.color = config.t1C;
+            document.getElementById('name-t2').style.color = config.t2C;
+            document.getElementById('btn-win-1').style.background = config.t1C;
+            document.getElementById('btn-win-2').style.background = config.t2C;
+            shuffleLetters();
+            showScreen('screen-game');
         }
 
-        function pickRandomEnc() {
-            const l = document.getElementById('ency-letter').innerText;
-            const qs = qBank[l] || [];
-            if(qs.length) alert("سؤال عشوائي: " + qs[Math.floor(Math.random()*qs.length)]);
-        }
-
-        // تهيئة اللعبة
-        function initGame() {
-            const c1 = document.getElementById('t1-color').value;
-            const c2 = document.getElementById('t2-color').value;
-            document.getElementById('name-t1').style.color = c1;
-            document.getElementById('name-t2').style.color = c2;
-            document.getElementById('p-btn-1').style.background = c1;
-            document.getElementById('p-btn-2').style.background = c2;
-            
-            const grid = document.getElementById('game-grid');
+        function shuffleLetters() {
+            const letters = "أبتثجحخدذرزسشصضطظعغفقكلمنهوي".split('').sort(() => Math.random() - 0.5);
+            const grid = document.getElementById('grid');
             grid.innerHTML = '';
-            const shuffled = [...letters].sort(()=>Math.random()-0.5);
-            shuffled.forEach((l, i) => {
-                const h = document.createElement('div');
-                h.className = 'hexagon';
-                h.id = 'hex-'+i;
-                h.innerText = l;
-                h.onclick = () => openPlay(l, i);
-                grid.appendChild(h);
+            hexStates = Array(25).fill(null);
+            for (let i = 0; i < 25; i++) {
+                const hex = document.createElement('div');
+                hex.className = 'hexagon';
+                hex.id = `hex-${i}`;
+                hex.innerText = letters[i];
+                hex.onclick = () => openModal(i);
+                grid.appendChild(hex);
+            }
+        }
+
+        function openModal(idx) {
+            if (hexStates[idx]) return;
+            currentIdx = idx;
+            document.getElementById('modal-letter').innerText = document.getElementById(`hex-${idx}`).innerText;
+            document.getElementById('modal-choice').style.display = 'flex';
+        }
+
+        function assignHex(team) {
+            hexStates[currentIdx] = team;
+            const hex = document.getElementById(`hex-${currentIdx}`);
+            hex.classList.add(`owned-${team}`);
+            hex.style.background = team === 1 ? config.t1C : config.t2C;
+            document.getElementById('modal-choice').style.display = 'none';
+            checkWin(team);
+        }
+
+        function changeScore(team, val) {
+            config[`s${team}`] += val;
+            if (config[`s${team}`] < 0) config[`s${team}`] = 0;
+            document.getElementById(`score-${team}`).innerText = config[`s${team}`];
+        }
+
+        // --- ذكاء التحقق من الفوز (التوصيل الذكي) ---
+        function checkWin(team) {
+            // خوارزمية BFS للبحث عن مسار متصل
+            const size = 5;
+            let startNodes = [];
+            let targetNodes = [];
+
+            if (team === 1) { // فريق 1 من الأعلى للأسفل
+                for (let i = 0; i < 5; i++) if (hexStates[i] === 1) startNodes.push(i);
+                for (let i = 20; i < 25; i++) if (hexStates[i] === 1) targetNodes.push(i);
+            } else { // فريق 2 من اليمين لليسار
+                for (let i = 0; i < 25; i += 5) if (hexStates[i] === 2) startNodes.push(i);
+                for (let i = 4; i < 25; i += 5) if (hexStates[i] === 2) targetNodes.push(i);
+            }
+
+            for (let start of startNodes) {
+                let visited = new Set();
+                let queue = [start];
+                while (queue.length > 0) {
+                    let node = queue.shift();
+                    if (targetNodes.includes(node)) {
+                        announceRoundWin(team);
+                        return;
+                    }
+                    if (!visited.has(node)) {
+                        visited.add(node);
+                        getNeighbors(node).forEach(n => {
+                            if (hexStates[n] === team) queue.push(n);
+                        });
+                    }
+                }
+            }
+        }
+
+        function getNeighbors(idx) {
+            const r = Math.floor(idx / 5), c = idx % 5;
+            let n = [];
+            const dirs = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, 1], [1, -1]];
+            dirs.forEach(([dr, dc]) => {
+                let nr = r + dr, nc = c + dc;
+                if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) n.push(nr * 5 + nc);
             });
-            goTo('screen-game');
+            return n;
         }
 
-        function openPlay(l, i) {
-            curH = i;
-            document.getElementById('play-letter').innerText = l;
-            const qs = qBank[l] || ["سؤال افتراضي صلب؟"];
-            document.getElementById('play-q').innerText = qs[Math.floor(Math.random()*qs.length)];
-            document.getElementById('modal-play').style.display='flex';
-        }
+        function announceRoundWin(team) {
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            config[`r${team}`]++;
+            const dots = document.getElementById(`rounds-${team}`).children;
+            for(let i=0; i<config[`r${team}`]; i++) dots[i].classList.add('active');
 
-        function winHex(team) {
-            const color = team==1 ? document.getElementById('t1-color').value : document.getElementById('t2-color').value;
-            document.getElementById('hex-'+curH).style.background = color;
-            closeM('modal-play');
-        }
-
-        function modScore(t, v) {
-            cfg['s'+t] += v;
-            document.getElementById('score-'+t).innerText = cfg['s'+t];
-        }
-
-        function toggleTimer() {
-            const b = document.getElementById('timer-ctrl');
-            if(cfg.on) { clearInterval(timer); cfg.on=false; b.innerText="تشغيل"; }
-            else {
-                cfg.on=true; b.innerText="إيقاف";
-                timer = setInterval(() => {
-                    cfg.left--; updateT();
-                    if(cfg.left <= 0) { clearInterval(timer); alert("انتهى الوقت!"); resetT(); }
+            if (config[`r${team}`] >= 3) {
+                setTimeout(() => alert(`🏆 مبروك للفريق ${team === 1 ? 'الأول' : 'الثاني'}! الفوز باللقب النهائي!`), 500);
+            } else {
+                setTimeout(() => {
+                    alert(`فاز الفريق ${team} بهذه الجولة! جولة جديدة ستبدأ.`);
+                    shuffleLetters();
+                    resetTimer();
                 }, 1000);
             }
         }
-        function resetT() { clearInterval(timer); cfg.left = cfg.t; updateT(); document.getElementById('timer-ctrl').innerText="تشغيل"; cfg.on=false; }
-        function updateT() { document.getElementById('timer-box').innerText = `00:${cfg.left.toString().padStart(2,'0')}`; }
 
-        // تفعيل وسائل المساعدة
-        function helpTime(btn) {
-            cfg.left += 60; // إضافة دقيقة
-            updateT();
-            btn.classList.add('used');
-            btn.innerText = "تمت الإضافة ✅";
+        // --- المؤقت ---
+        function toggleTimer() {
+            const btn = document.getElementById('btn-timer');
+            if (config.running) {
+                clearInterval(timerInt);
+                config.running = false;
+                btn.innerText = "استئناف";
+            } else {
+                config.running = true;
+                btn.innerText = "إيقاف";
+                timerInt = setInterval(() => {
+                    config.left--;
+                    updateTimerUI();
+                    if (config.left <= 0) {
+                        clearInterval(timerInt);
+                        alert("انتهى الوقت!");
+                        resetTimer();
+                    }
+                }, 1000);
+            }
         }
 
-        function helpHint(btn) {
-            alert("تلميح للمقدم: الإجابة تحتوي على معلومة تاريخية/علمية هامة.");
-            btn.classList.add('used');
+        function resetTimer() {
+            clearInterval(timerInt);
+            config.running = false;
+            config.left = config.time;
+            document.getElementById('btn-timer').innerText = "تشغيل";
+            updateTimerUI();
+        }
+
+        function updateTimerUI() {
+            document.getElementById('timer').innerText = `00:${config.left.toString().padStart(2, '0')}`;
         }
     </script>
 </body>
