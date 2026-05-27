@@ -1,4 +1,4 @@
-هذا موقع كامل وجاهز عن عيد الأضحى، مع ظرف "خد عيديتك" وعند الضغط ينتقل إلى عيديتك "حمود وياش". التصميم حديث، راقي، وجذاب، ومناسب للجوال والأجهزة اللوحية.
+بالتأكيد، فهمت طلبك الآن. هذا موقع تفاعلي راقي وفخم يخلي الزائر يختار عيديته من بين ٣ ظروف، وكل ظرف إذا ضغطته يظهر له رسالة "عيديتك حمود وياش" مع تصميم احتفالي استثنائي يناسب العيد والجوال.
 
 ```html
 <!DOCTYPE html>
@@ -6,40 +6,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>عيد الأضحى المبارك | عيديتك من حمود وياش</title>
-    <!-- Google Fonts: خطوط راقية وعصرية -->
+    <title>اختار عيديتك | حمود وياش - عيد الأضحى المبارك</title>
+    <!-- Tajawal Font + Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (أيقونات) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(145deg, #fef5e7 0%, #fde9d4 100%);
+            background: linear-gradient(145deg, #fef2df 0%, #fbe5cd 100%);
             min-height: 100vh;
+            padding: 1.8rem 1.2rem;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
-            position: relative;
         }
 
-        /* زخرفة خلفية بأضاحي ونجوم إسلامية راقية */
+        /* زخارف خلفية احتفالية */
         body::before {
-            content: "🐏✨🌙⭐";
+            content: "🐏🌙✨⭐🎉";
             position: absolute;
-            font-size: 140px;
-            opacity: 0.03;
-            bottom: 10px;
-            right: 10px;
+            font-size: 120px;
+            opacity: 0.04;
+            bottom: 0;
+            left: 0;
             pointer-events: none;
             white-space: pre;
-            transform: rotate(-5deg);
+            letter-spacing: 15px;
         }
 
         body::after {
@@ -49,485 +49,552 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 10% 20%, rgba(255,215,150,0.1) 2%, transparent 2.5%);
-            background-size: 35px 35px;
+            background-image: radial-gradient(circle at 20% 35%, rgba(230, 160, 70, 0.08) 2%, transparent 2.5%);
+            background-size: 45px 45px;
             pointer-events: none;
         }
 
         .container {
-            max-width: 580px;
+            max-width: 650px;
             width: 100%;
-            margin: auto;
+            margin: 0 auto;
             position: relative;
-            z-index: 2;
-            animation: fadeSlideUp 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            z-index: 10;
+            animation: fadeSlide 0.7s ease-out;
         }
 
-        @keyframes fadeSlideUp {
-            0% {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(35px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* بطاقة العيد الرئيسية */
-        .eid-card {
-            background: rgba(255, 255, 255, 0.96);
-            backdrop-filter: blur(2px);
-            border-radius: 70px 70px 70px 50px;
-            box-shadow: 0 35px 60px -20px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 215, 120, 0.5), inset 0 1px 4px rgba(255, 255, 200, 0.8);
-            overflow: hidden;
-            padding: 2rem 1.8rem 2.5rem;
-            transition: all 0.2s ease;
+        /* البطاقة الرئيسية */
+        .eid-master-card {
+            background: rgba(255, 252, 245, 0.97);
+            backdrop-filter: blur(3px);
+            border-radius: 70px 70px 80px 70px;
+            box-shadow: 0 40px 60px -25px rgba(0, 0, 0, 0.35), inset 0 1px 3px rgba(255, 245, 200, 0.9);
+            padding: 1.8rem 1.5rem 2.5rem;
             text-align: center;
+            border: 1px solid rgba(255, 215, 150, 0.7);
         }
 
-        /* هلال ونجوم متحركة خفيفة */
-        .moon-decoration {
+        /* رأس العيد */
+        .header-eid {
+            margin-bottom: 1rem;
+        }
+        .moon-stars {
+            font-size: 2.6rem;
             display: flex;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 12px;
-            font-size: 2.8rem;
-            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.1));
-            animation: gentleFloat 3s infinite ease-in-out;
+            gap: 12px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+            animation: floatAnim 2.5s infinite ease;
         }
-
-        @keyframes gentleFloat {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-            100% { transform: translateY(0px); }
+        @keyframes floatAnim {
+            0% { transform: translateY(0);}
+            50% { transform: translateY(-6px);}
+            100% { transform: translateY(0);}
         }
-
-        .eid-title {
-            font-size: 2.6rem;
+        .main-title {
+            font-size: 2.5rem;
             font-weight: 900;
-            background: linear-gradient(135deg, #b seventeen  #b56a1a, #e09d32);
-            background: linear-gradient(135deg, #a5641a, #d18f2c, #f5bc70);
+            background: linear-gradient(135deg, #b45f1b, #e2a244, #f7cd82);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 2px 4px 12px rgba(218, 145, 35, 0.2);
-            margin-top: 5px;
+            margin-top: 12px;
             letter-spacing: -0.5px;
         }
-
-        .eid-sub {
-            font-size: 1.1rem;
-            color: #b1621a;
+        .sub-title {
             background: #fff0df;
             display: inline-block;
-            padding: 5px 18px;
-            border-radius: 40px;
-            font-weight: 600;
-            margin: 12px auto 20px;
-            box-shadow: inset 0 1px 3px #ffe1b3, 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        /* صورة كبش / أضحية راقية */
-        .sacrifice-icon {
-            font-size: 6rem;
-            margin: 15px 0 5px;
-            background: linear-gradient(145deg, #fff3e2, #ffe2c4);
-            width: 130px;
-            height: 130px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            padding: 5px 24px;
             border-radius: 60px;
-            margin-left: auto;
-            margin-right: auto;
-            box-shadow: 0 15px 25px rgba(0,0,0,0.1), inset 0 1px 3px white;
-            transition: all 0.2s;
+            font-weight: 700;
+            color: #b25f1a;
+            font-size: 1rem;
+            margin: 12px 0 10px;
+            box-shadow: inset 0 1px 2px #ffe5ca, 0 3px 6px rgba(0,0,0,0.02);
         }
 
-        .sacrifice-icon i {
-            font-size: 5rem;
-            color: #c57f2e;
-            filter: drop-shadow(2px 6px 10px rgba(0,0,0,0.15));
+        /* قسم الاختيار: 3 ظروف جذابة */
+        .envelopes-section {
+            margin: 35px 0 25px;
         }
-
-        /* الظرف الرائع */
-        .envelope-wrapper {
-            margin: 28px 0 20px;
-            perspective: 800px;
+        .choose-text {
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: #9b521a;
+            background: #faeedf;
+            display: inline-block;
+            padding: 5px 18px;
+            border-radius: 50px;
+            margin-bottom: 25px;
         }
-
-        .envelope {
-            background: linear-gradient(135deg, #f8e5bf, #f3d9ac);
-            border-radius: 32px;
-            padding: 1.3rem 0.8rem;
+        .envelopes-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 22px;
+            margin-top: 10px;
+        }
+        /* تصميم كل ظرف */
+        .envelope-card {
+            flex: 1;
+            min-width: 150px;
+            background: linear-gradient(145deg, #fff5e8, #ffefdd);
+            border-radius: 50px 30px 55px 30px;
+            padding: 1.5rem 0.7rem 1.5rem;
             cursor: pointer;
             transition: all 0.25s ease;
-            box-shadow: 0 20px 35px -12px rgba(102, 51, 0, 0.3), inset 0 1px 0 rgba(255, 245, 205, 0.9);
-            border: 1px solid #ffdf9c;
-            position: relative;
-            transform-style: preserve-3d;
-        }
-
-        .envelope:hover {
-            transform: scale(1.02) translateY(-3px);
-            background: linear-gradient(135deg, #faeecd, #f5e2bc);
-            box-shadow: 0 28px 40px -16px #7e4f1d6b;
-        }
-
-        .envelope:active {
-            transform: scale(0.98);
-        }
-
-        .envelope-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .envelope-icon {
-            font-size: 3.6rem;
-            color: #b5621e;
-            background: white;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-        }
-
-        .envelope h3 {
-            font-size: 1.9rem;
-            font-weight: 900;
-            color: #8b4517;
-            letter-spacing: 1px;
-            text-shadow: 0 1px 2px #ffefc0;
-        }
-
-        .envelope p {
-            font-size: 1.1rem;
-            font-weight: 600;
-            background: #fff1df;
-            padding: 5px 18px;
-            border-radius: 50px;
-            color: #aa5e1c;
-        }
-
-        .shine {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 1.5rem;
-            opacity: 0.3;
-            pointer-events: none;
-        }
-
-        /* تذييل حمود وياش */
-        .footer-gift {
-            margin-top: 32px;
-            background: #f9e4ca;
-            border-radius: 60px;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            flex-wrap: wrap;
-            font-size: 1rem;
-            font-weight: 700;
-            color: #ad5f23;
-            border: 1px solid #ffd7a3;
+            box-shadow: 0 20px 30px -12px rgba(104, 56, 12, 0.25);
+            border: 1px solid #fde2bc;
+            text-align: center;
             backdrop-filter: blur(2px);
+            position: relative;
         }
-
-        .footer-gift i {
-            font-size: 1.7rem;
-            color: #c9782e;
+        .envelope-card:hover {
+            transform: translateY(-8px);
+            background: linear-gradient(145deg, #fff8ed, #ffe7cf);
+            box-shadow: 0 32px 40px -18px #8a4f1c66;
+            border-color: #fddfaa;
         }
-
-        .gift-name {
-            background: #fff1e0;
-            padding: 6px 18px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            letter-spacing: 0.5px;
+        .envelope-card:active {
+            transform: scale(0.97);
+            transition: 0.05s;
         }
-
-        .gift-name span {
+        /* أيقونات مختلفة لكل ظرف */
+        .env-icon {
+            font-size: 3.2rem;
+            background: #ffffffd9;
+            width: 85px;
+            height: 85px;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 45px;
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.08), inset 0 1px 0 white;
+            color: #c5772a;
+        }
+        .env-title {
+            font-size: 1.8rem;
             font-weight: 900;
-            color: #c9691e;
-            font-size: 1.5rem;
+            color: #9c551d;
+            letter-spacing: 1px;
+            margin: 5px 0 4px;
+        }
+        .env-label {
+            font-size: 0.9rem;
+            background: #fae1bd;
+            padding: 4px 14px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 600;
+            color: #aa5f23;
+        }
+        /* ظرف مميز بلون مختلف خفيف */
+        .envelope-card:nth-child(1) .env-icon { background: #fff2e2; }
+        .envelope-card:nth-child(2) .env-icon { background: #feefdb; }
+        .envelope-card:nth-child(3) .env-icon { background: #ffecda; }
+
+        /* توقيع حمود وياش الرئيسي */
+        .signature-gift {
+            margin-top: 35px;
+            background: linear-gradient(115deg, #f7e5d2, #feeedc);
+            border-radius: 90px;
+            padding: 14px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            border: 2px solid #f7dbb0;
+            box-shadow: 0 8px 14px rgba(0,0,0,0.05);
+        }
+        .signature-gift i {
+            font-size: 2.2rem;
+            color: #d48a3b;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        .gift-name-big {
+            font-weight: 900;
+            font-size: 1.4rem;
+            background: #fff2e6;
+            padding: 6px 20px;
+            border-radius: 60px;
+            color: #b6621c;
+        }
+        .gift-name-big span {
+            font-size: 1.7rem;
+            margin: 0 4px;
         }
 
-        /* رسالة خفيفة */
-        .bless-msg {
-            font-size: 0.9rem;
-            margin-top: 25px;
-            color: #a25e24;
-            opacity: 0.85;
-            font-weight: 500;
+        .footer-bless {
+            margin-top: 26px;
+            font-size: 0.85rem;
+            color: #b36f30;
             display: flex;
             justify-content: center;
-            gap: 8px;
+            gap: 18px;
             flex-wrap: wrap;
         }
 
-        /* تأثيرات الجوال واللمس */
+        /* مودال عيدية حمود وياش الفاخر */
+        .modal-gift {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.2s, opacity 0.25s ease;
+            font-family: 'Tajawal', sans-serif;
+            padding: 20px;
+        }
+        .modal-gift.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-card {
+            max-width: 500px;
+            width: 100%;
+            background: #fffef7;
+            border-radius: 65px 50px 75px 50px;
+            text-align: center;
+            padding: 2rem 1.7rem 2rem;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.2, 1.2, 0.4, 1);
+            box-shadow: 0 50px 70px rgba(0,0,0,0.4), 0 0 0 6px #f5e1be, 0 0 0 12px #e9c996;
+        }
+        .active .modal-card {
+            transform: scale(1);
+        }
+        .close-modal {
+            position: absolute;
+            top: 18px;
+            left: 20px;
+            font-size: 1.9rem;
+            cursor: pointer;
+            background: #ffefda;
+            width: 40px;
+            height: 40px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            color: #ad611f;
+        }
+        .close-modal:hover {
+            background: #f3dbbc;
+            transform: rotate(90deg);
+        }
+        .gift-icon-big {
+            font-size: 5rem;
+            background: #f9e4ca;
+            width: 130px;
+            height: 130px;
+            margin: 15px auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            box-shadow: inset 0 2px 12px white, 0 20px 25px -12px #764d1e;
+        }
+        .modal-title {
+            font-size: 2.1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #c0742c, #f1bd6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 8px 0 5px;
+        }
+        .modal-sub {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #b65915;
+            margin-bottom: 12px;
+        }
+        .modal-message {
+            background: #fcf0e1;
+            padding: 16px;
+            border-radius: 50px;
+            margin: 15px 0;
+            font-weight: 600;
+            color: #8e4d1a;
+            font-size: 1.1rem;
+        }
+        .modal-btn {
+            background: #d48a3b;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: white;
+            margin-top: 8px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            transition: 0.15s;
+            box-shadow: 0 6px 0 #7e411a;
+        }
+        .modal-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #7e411a;
+        }
+        /* تنسيق الأجهزة الصغيرة */
         @media (max-width: 550px) {
             .container {
                 padding: 0;
             }
-            .eid-card {
-                padding: 1.8rem 1.2rem 2rem;
+            .eid-master-card {
+                padding: 1.4rem 1.2rem 1.8rem;
                 border-radius: 50px;
             }
-            .eid-title {
-                font-size: 2rem;
+            .main-title {
+                font-size: 1.9rem;
             }
-            .envelope h3 {
-                font-size: 1.6rem;
+            .envelopes-grid {
+                gap: 15px;
             }
-            .sacrifice-icon {
-                width: 100px;
-                height: 100px;
+            .envelope-card {
+                min-width: 110px;
+                padding: 1rem 0.5rem;
             }
-            .sacrifice-icon i {
-                font-size: 4rem;
-            }
-            .envelope-icon {
+            .env-icon {
                 width: 65px;
                 height: 65px;
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
-            .footer-gift {
-                padding: 10px 12px;
+            .env-title {
+                font-size: 1.4rem;
             }
-            .gift-name span {
-                font-size: 1.3rem;
+            .gift-name-big {
+                font-size: 1.1rem;
+            }
+            .modal-title {
+                font-size: 1.8rem;
+            }
+            .modal-sub {
+                font-size: 1.4rem;
             }
         }
-
-        /* زر الظفر مع تأثير رياضي */
-        .btn-click-area {
-            cursor: pointer;
+        /* توهج بسيط */
+        @keyframes pulseGlow {
+            0% { text-shadow: 0 0 0px #ffcf91; }
+            100% { text-shadow: 0 0 6px #ffbb66; }
         }
-
-        /* أيقونة ذهبية */
-        .gold-spark {
-            transition: 0.1s;
+        .envelope-card:hover .env-title {
+            animation: pulseGlow 0.5s ease infinite alternate;
         }
-
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="eid-card">
-        <!-- هلال و زينة علوية -->
-        <div class="moon-decoration">
-            <span>🌙</span> <span>✨</span> <span>🐏</span> <span>⭐</span> <span>🌙</span>
-        </div>
-        <h1 class="eid-title">🎉 عيد أضحى مبارك 🎉</h1>
-        <div class="eid-sub">كل عام وأنتم بخير وتقبل الله طاعاتكم</div>
-
-        <!-- رمز الأضحية الجذاب -->
-        <div class="sacrifice-icon">
-            <i class="fas fa-sheep"></i>
+    <div class="eid-master-card">
+        <div class="header-eid">
+            <div class="moon-stars">
+                <span>🌙</span> <span>🐏</span> <span>⭐</span> <span>✨</span>
+            </div>
+            <h1 class="main-title">🎈 عيد أضحى مبارك 🎈</h1>
+            <div class="sub-title">تقبل الله منا ومنكم صالح الأعمال</div>
         </div>
 
-        <!-- الظرف الجذاب : خد عيديتك -->
-        <div class="envelope-wrapper" id="envelopeTrigger">
-            <div class="envelope">
-                <div class="envelope-content">
-                    <div class="envelope-icon">
-                        <i class="fas fa-envelope-open-text"></i>
-                    </div>
-                    <h3>📩 خد عيديتك 📩</h3>
-                    <p>👈 اضغط هنا يا غالي 👉</p>
+        <!-- قسم اختار عيديتك من حمود وياش -->
+        <div class="envelopes-section">
+            <div class="choose-text">
+                <i class="fas fa-hand-peace"></i> اختار عيديتك من عند حمود <i class="fas fa-gift"></i>
+            </div>
+            <div class="envelopes-grid" id="envelopesGrid">
+                <!-- الظرف الأول -->
+                <div class="envelope-card" data-env="1">
+                    <div class="env-icon"><i class="fas fa-envelope-open-text"></i></div>
+                    <div class="env-title">ظرف ١</div>
+                    <div class="env-label"><i class="fas fa-star"></i> اضغط تختار <i class="fas fa-star"></i></div>
                 </div>
-                <div class="shine">✨🎁✨</div>
+                <!-- الظرف الثاني -->
+                <div class="envelope-card" data-env="2">
+                    <div class="env-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="env-title">ظرف ٢</div>
+                    <div class="env-label"><i class="fas fa-star-of-life"></i> هدية سعيدة</div>
+                </div>
+                <!-- الظرف الثالث -->
+                <div class="envelope-card" data-env="3">
+                    <div class="env-icon"><i class="fas fa-envelope-circle-check"></i></div>
+                    <div class="env-title">ظرف ٣</div>
+                    <div class="env-label"><i class="fas fa-crown"></i> الأجمل لك</div>
+                </div>
             </div>
         </div>
 
-        <!-- قسم حمود وياش مع الجائزة المميزة -->
-        <div class="footer-gift">
-            <i class="fas fa-gift fa-fw"></i>
-            <div class="gift-name">
+        <!-- التوقيع الثابت : عيديتك حمود وياش -->
+        <div class="signature-gift">
+            <i class="fas fa-candy-cane"></i>
+            <div class="gift-name-big">
                 🎁 <span>عيديتك : حمود وياش</span> 🎁
             </div>
-            <i class="fas fa-star-of-life fa-fw"></i>
+            <i class="fas fa-heart" style="color:#e2862a;"></i>
         </div>
+        <div class="footer-bless">
+            <span><i class="fas fa-cloud-moon"></i> كل عام وأنتم بخير</span>
+            <span><i class="fas fa-dove"></i> فرحة العيد تهنئكم</span>
+        </div>
+    </div>
+</div>
 
-        <div class="bless-msg">
-            <i class="fas fa-hands-helping"></i> أفراح العيد تهل علينا، كل عام وأنتم لأحبابكم أقرب <i class="fas fa-heart" style="color:#e67e22;"></i>
+<!-- مودال العيدية الخاصة بحمود وياش (يظهر عند ضغط أي ظرف) -->
+<div id="giftModal" class="modal-gift">
+    <div class="modal-card">
+        <div class="close-modal" id="closeModalBtn"><i class="fas fa-times"></i></div>
+        <div class="gift-icon-big">
+            <i class="fas fa-gift"></i>
         </div>
-        <!-- رسالة صغيرة -->
-        <div style="font-size: 0.75rem; margin-top: 20px; color:#c48346; background:#fff4e8; width: fit-content; margin-left: auto; margin-right: auto; padding: 4px 15px; border-radius: 20px;">
-            🤍 عيد سعيد 🤍
+        <div class="modal-title">🎉 عيدية مميزة 🎉</div>
+        <div class="modal-sub" id="modalGiftName">حمود وياش</div>
+        <div class="modal-message">
+            <i class="fas fa-smile-wink"></i> مبارك عليك العيد! من القلب أقدم لك أجمل عيدية <br>
+            <strong style="font-size: 1.2rem;">🎈 عيديتك حمود وياش 🎈</strong>
+            <div style="margin-top: 8px;">✨ أطيب الأماني و السعادة ✨</div>
         </div>
+        <button class="modal-btn" id="modalConfirmBtn"><i class="fas fa-heart"></i> عيد سعيد عليك</button>
     </div>
 </div>
 
 <script>
     (function() {
-        // إنشاء نافذة منبثقة أو بطاقة مميزة لعيدية "حمود وياش" بأناقة عيد الأضحى
-        // عند الضغط على الظرف ننتقل إلى العيدية الرائعة (مع تأثير موبايل سلس).
-        // نستخدم مودال حديث وجذاب جداً مع تصميم خاص بـ حمود وياش
-
-        // الحصول على عنصر الظرف
-        const envelope = document.getElementById('envelopeTrigger');
-
-        // دالة عرض العيدية بأسلوب ساحر
-        function showEidyatHamoudWaYash() {
-            // إنشاء overlay احترافي
-            const overlay = document.createElement('div');
-            overlay.id = 'eidyModalOverlay';
-            overlay.style.position = 'fixed';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.width = '100%';
-            overlay.style.height = '100%';
-            overlay.style.backgroundColor = 'rgba(0,0,0,0.75)';
-            overlay.style.backdropFilter = 'blur(5px)';
-            overlay.style.zIndex = '9999';
-            overlay.style.display = 'flex';
-            overlay.style.alignItems = 'center';
-            overlay.style.justifyContent = 'center';
-            overlay.style.padding = '20px';
-            overlay.style.fontFamily = "'Tajawal', sans-serif";
-            overlay.style.opacity = '0';
-            overlay.style.transition = 'opacity 0.3s ease';
-
-            // محتوى المودال الراقي جداً
-            const modalCard = document.createElement('div');
-            modalCard.style.maxWidth = '520px';
-            modalCard.style.width = '100%';
-            modalCard.style.backgroundColor = '#fffaf2';
-            modalCard.style.borderRadius = '70px 50px 70px 50px';
-            modalCard.style.boxShadow = '0 40px 70px rgba(0,0,0,0.4), 0 0 0 8px #f7e2bf, 0 0 0 12px #e6c394';
-            modalCard.style.overflow = 'hidden';
-            modalCard.style.transform = 'scale(0.9)';
-            modalCard.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.2, 0.64, 1)';
-            modalCard.style.textAlign = 'center';
-            modalCard.style.padding = '2rem 1.5rem 2rem';
-            modalCard.style.position = 'relative';
-
-            // إضافة تأثيرات داخلية
-            modalCard.innerHTML = `
-                <div style="position:absolute; top:15px; left:20px; font-size:2rem; opacity:0.3;">🎉</div>
-                <div style="position:absolute; bottom:15px; right:20px; font-size:2rem; opacity:0.3;">🎊</div>
-                <div class="modal-content">
-                    <div style="font-size: 4rem; margin-bottom: 10px;">🐏✨</div>
-                    <div style="background: #efdbb6; width:80px; height:80px; border-radius: 50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 20px; box-shadow: inset 0 2px 5px #fdf5e3, 0 8px 18px rgba(0,0,0,0.1);">
-                        <i class="fas fa-crown" style="font-size: 3rem; color:#d49436;"></i>
-                    </div>
-                    <h2 style="font-size: 2.3rem; font-weight: 900; background: linear-gradient(135deg, #b9681c, #e9b566); -webkit-background-clip: text; background-clip: text; color: transparent; margin: 0 0 8px;">🎁 عيديتك الجميلة 🎁</h2>
-                    <div style="font-size: 1.9rem; font-weight: 800; margin: 6px 0 10px; color:#bd7a2e; letter-spacing: -0.5px;">
-                        حمود وياش
-                    </div>
-                    <div style="background: #fef0e0; padding: 18px 14px; border-radius: 50px; margin: 18px 0 15px;">
-                        <p style="font-size: 1.3rem; font-weight: 700; color:#a45112;"><i class="fas fa-gift" style="margin-left: 8px;"></i> مبارك عليك العيد <i class="fas fa-smile-wink"></i></p>
-                        <p style="font-size: 1rem; margin-top: 8px;">من قلب الفرحة، عيدية حمود وياش تتمنى لك أياماً مليئة بالسعادة والبركات ♥️</p>
-                        <div style="display: flex; justify-content: center; gap: 12px; margin: 20px 0 5px;">
-                            <span style="background:#dea45c; padding: 8px 20px; border-radius: 40px; color: white; font-weight: bold; font-size: 1rem;"><i class="fas fa-coins"></i>  💰 عيدية ذهبية</span>
-                            <span style="background:#f8ca8c; padding: 8px 20px; border-radius: 40px; color:#7a4316; font-weight: bold;"><i class="fas fa-candy-cane"></i> حلويات العيد</span>
-                        </div>
-                    </div>
-                    <div style="margin: 20px 0 10px; font-size: 1.1rem; background: #fff2e2; padding: 8px; border-radius: 40px;">
-                        <i class="fas fa-star"></i> كل عام وأنت بخير يا أغلى الناس <i class="fas fa-star"></i>
-                    </div>
-                    <button id="closeModalBtn" style="background: #d68b3c; border: none; color: white; font-weight: bold; font-size: 1.2rem; padding: 12px 32px; border-radius: 50px; cursor: pointer; margin-top: 15px; font-family: 'Tajawal', sans-serif; box-shadow: 0 5px 10px rgba(0,0,0,0.2); transition: 0.15s;">🤍 عيد مبارك 🤍</button>
-                </div>
-            `;
-
-            overlay.appendChild(modalCard);
-            document.body.appendChild(overlay);
-
-            // إظهار الـ overlay مع تأثير fade
-            requestAnimationFrame(() => {
-                overlay.style.opacity = '1';
-                modalCard.style.transform = 'scale(1)';
-            });
-
-            // إضافة إغلاق عند الضغط على الزر أو خلفية الـ Overlay
-            const closeBtn = modalCard.querySelector('#closeModalBtn');
-            const closeModal = () => {
-                overlay.style.opacity = '0';
-                modalCard.style.transform = 'scale(0.9)';
-                setTimeout(() => {
-                    if (overlay && overlay.remove) overlay.remove();
-                }, 300);
-            };
-            closeBtn.addEventListener('click', closeModal);
-            // اغلاق عند الضغط على الخلفية
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) closeModal();
-            });
-
-            // إضافة تأثير صوتي رمزي اختياري (صامت لكن يضيف حيوية - بدون صوت حقيقي حتى لا يزعج)
-            // مجرد اهتزاز خفيف للزر (vibration إذا كان الجهاز يدعم)
+        // اختيار العناصر
+        const envelopes = document.querySelectorAll('.envelope-card');
+        const modal = document.getElementById('giftModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const modalConfirm = document.getElementById('modalConfirmBtn');
+        
+        // وظيفة فتح المودال الجميل لـ "عيديتك حمود وياش"
+        function openGiftModal() {
+            if (!modal) return;
+            // نضمن أن المودال يظهر دائمًا بنفس المحتوى الجميل لكن يمكن لو حاب تضيف أي تأثير اختياري
+            modal.classList.add('active');
+            // إضافة تأثير اهتزاز لطيف اذا كان الجهاز يدعم (vibration اختياري)
             if (navigator.vibrate) {
-                navigator.vibrate(50);
+                navigator.vibrate(30);
             }
+            // منع تمرير الخلفية
+            document.body.style.overflow = 'hidden';
         }
-
-        // إضافة الحدث على الظرف
-        if (envelope) {
+        
+        // إغلاق المودال
+        function closeModal() {
+            if (!modal) return;
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // إضافة حدث لكل ظرف: عند الضغط يفتح عيديتك حمود وياش
+        envelopes.forEach(envelope => {
+            // للأجهزة التي تعمل باللمس والماوس
             envelope.addEventListener('click', (e) => {
                 e.stopPropagation();
-                // إضافة تأثير فوري لزيادة التفاعل: تغيير بسيط للظرف
-                const envDiv = envelope.querySelector('.envelope');
-                if (envDiv) {
-                    envDiv.style.transform = 'scale(0.98)';
-                    setTimeout(() => {
-                        if (envDiv) envDiv.style.transform = '';
-                    }, 120);
-                }
-                // عرض عيدية حمود وياش
-                showEidyatHamoudWaYash();
+                // تأثير النقر المصغر (تأكيد تفاعلي)
+                envelope.style.transform = 'scale(0.96)';
+                setTimeout(() => {
+                    envelope.style.transform = '';
+                }, 120);
+                // فتح المودال الذي يحوي "عيديتك حمود وياش"
+                openGiftModal();
             });
-            // دعم اللمس للأجهزة الجوالة
+            
+            // للجوالات ضمان الاستجابة السريعة
             envelope.addEventListener('touchstart', (e) => {
-                // لا نريد منع الافتراضي تماما لكن ضمان
+                // لا نريد تعطيل النقر العادي لكن نضمن استجابة
                 e.preventDefault();
-                const envDiv = envelope.querySelector('.envelope');
-                if (envDiv) {
-                    envDiv.style.transform = 'scale(0.97)';
-                    setTimeout(() => {
-                        if (envDiv) envDiv.style.transform = '';
-                    }, 100);
+                envelope.style.transform = 'scale(0.96)';
+                setTimeout(() => {
+                    envelope.style.transform = '';
+                }, 100);
+                openGiftModal();
+            });
+        });
+        
+        // إغلاق المودال من الأزرار أو خلفية المودال
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+        if (modalConfirm) {
+            modalConfirm.addEventListener('click', closeModal);
+        }
+        // إغلاق عند النقر على الخلفية (الـ overlay)
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
                 }
-                showEidyatHamoudWaYash();
             });
         }
-
-        // إضافة بعض الزينة الديناميكية على العناصر (تأكيد تصميم راقي)
-        const addSparkles = () => {
-            const card = document.querySelector('.eid-card');
-            if(card){
-                setInterval(() => {
-                    const spark = document.createElement('div');
-                    spark.innerText = '⭐';
-                    spark.style.position = 'absolute';
-                    spark.style.fontSize = '12px';
-                    spark.style.opacity = '0.6';
-                    spark.style.pointerEvents = 'none';
-                    spark.style.left = Math.random() * 90 + '%';
-                    spark.style.top = Math.random() * 100 + '%';
-                    spark.style.zIndex = '5';
-                    card.style.position = 'relative';
-                    card.appendChild(spark);
-                    setTimeout(() => {
-                        spark.remove();
-                    }, 1200);
-                }, 3800);
-            }
+        
+        // إضافة عناصر زينة احتفالية متحركة (نجوم صغيرة تظهر بشكل طبيعي)
+        const createFloatingStar = () => {
+            const star = document.createElement('div');
+            star.innerHTML = '⭐';
+            star.style.position = 'fixed';
+            star.style.fontSize = Math.random() * 18 + 10 + 'px';
+            star.style.opacity = Math.random() * 0.6 + 0.2;
+            star.style.pointerEvents = 'none';
+            star.style.zIndex = '999';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = '90%';
+            star.style.transform = 'translateY(0)';
+            star.style.transition = 'all 5s linear';
+            star.style.filter = 'drop-shadow(0 0 2px gold)';
+            document.body.appendChild(star);
+            requestAnimationFrame(() => {
+                star.style.transform = 'translateY(-800px)';
+                star.style.opacity = '0';
+            });
+            setTimeout(() => {
+                if (star && star.remove) star.remove();
+            }, 5000);
         };
-        setTimeout(addSparkles, 800);
+        // توليد نجوم بشكل مستمر كل 3 ثواني (يضيف جو راقي)
+        setInterval(createFloatingStar, 3200);
+        
+        // إضافة تأثيرات إضافية للحفاظ على التصميم الرائع: عند فتح المودال نضيف نص فريد ولكن ثابت على "عيديتك حمود وياش"
+        // نضمن أيضاً عند كل فتح للمودال يتم إبراز العيدية بصوت غير مزعج (تأثير ذهني)
+        // نضيف بعض الإيماءات في العنوان لزيادة البهجة
+        const modalSub = document.getElementById('modalGiftName');
+        if (modalSub) {
+            // نترك النص كما هو لكن يمكن تلوينه
+            modalSub.innerHTML = `🎀 حمود وياش 🎀`;
+        }
+        
+        // تحديث بسيط داخل المودال لجعل العيدية مميزة جداً
+        const modalMsgDiv = document.querySelector('.modal-message');
+        if (modalMsgDiv) {
+            // حفظ المحتوى الأصلي لكن نضمن ظهور حمود وياش بشكل كبير
+            modalMsgDiv.innerHTML = `<i class="fas fa-crown"></i> حبيت أفرحك بالعيدية الأجمل<br>
+                                    <strong style="font-size:1.3rem;">🎁 عيديتك حمود وياش 🎁</strong><br>
+                                    <span style="display:inline-block; margin-top:7px;">🐏 كل عام وانت بألف خير يا غالي 🐏</span>`;
+        }
+        
+        // إضافة لمسة للظروف: رسالة عند الضغط توضح أنه تم اختيار العيدية (لكن المودال يظهر نفس الشيء، ممتاز)
+        console.log("موقع اختيار عيديتك بثلاث ظروف - كل ظرف يوصلك لعيدية حمود وياش 🎊");
+        
+        // تحسين للجوال: إزالة overflow-hidden عند الإغلاق الكامل
+        window.addEventListener('resize', () => {
+            if (modal && !modal.classList.contains('active')) {
+                document.body.style.overflow = '';
+            }
+        });
     })();
 </script>
 </body>
